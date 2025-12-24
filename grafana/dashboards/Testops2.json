@@ -12,7 +12,7 @@
   "panels": [
     {
       "id": 1,
-      "title": "Casos por segundo",
+      "title": "Requests por segundo",
       "type": "timeseries",
       "gridPos": { "x": 0, "y": 0, "w": 24, "h": 8 },
       "targets": [
@@ -52,11 +52,12 @@
         ]
       }
     },
+
     {
       "id": 2,
       "title": "Total Casos",
       "type": "stat",
-      "gridPos": { "x": 0, "y": 8, "w": 8, "h": 6 },
+      "gridPos": { "x": 0, "y": 8, "w": 6, "h": 5 },
       "targets": [
         {
           "expr": "sum(k6_http_reqs_total)",
@@ -68,11 +69,12 @@
         "justifyMode": "center"
       }
     },
+
     {
       "id": 3,
       "title": "✅ Casos OK",
       "type": "stat",
-      "gridPos": { "x": 8, "y": 8, "w": 8, "h": 6 },
+      "gridPos": { "x": 6, "y": 8, "w": 6, "h": 5 },
       "targets": [
         {
           "expr": "sum(k6_http_reqs_total{expected_response=\"true\"})",
@@ -92,11 +94,12 @@
         }
       }
     },
+
     {
       "id": 4,
       "title": "❌ Casos Failed",
       "type": "stat",
-      "gridPos": { "x": 16, "y": 8, "w": 8, "h": 6 },
+      "gridPos": { "x": 12, "y": 8, "w": 6, "h": 5 },
       "targets": [
         {
           "expr": "sum(k6_http_reqs_total{expected_response=\"false\"})",
@@ -112,6 +115,88 @@
           "color": {
             "mode": "fixed",
             "fixedColor": "red"
+          }
+        }
+      }
+    },
+
+    {
+      "id": 5,
+      "title": "📘 HU en alcance",
+      "type": "stat",
+      "gridPos": { "x": 18, "y": 8, "w": 6, "h": 5 },
+      "targets": [
+        {
+          "expr": "vector(18)",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "justifyMode": "center"
+      }
+    },
+
+    {
+      "id": 6,
+      "title": "🧪 HU probadas",
+      "type": "stat",
+      "gridPos": { "x": 0, "y": 13, "w": 6, "h": 5 },
+      "targets": [
+        {
+          "expr": "vector(14)",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "justifyMode": "center"
+      }
+    },
+
+    {
+      "id": 7,
+      "title": "🐞 Defectos abiertos",
+      "type": "stat",
+      "gridPos": { "x": 6, "y": 13, "w": 6, "h": 5 },
+      "targets": [
+        {
+          "expr": "vector(5)",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "colorMode": "background",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "red"
+          }
+        }
+      }
+    },
+
+    {
+      "id": 8,
+      "title": "✅ Defectos cerrados",
+      "type": "stat",
+      "gridPos": { "x": 12, "y": 13, "w": 6, "h": 5 },
+      "targets": [
+        {
+          "expr": "vector(21)",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "colorMode": "background",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "green"
           }
         }
       }
