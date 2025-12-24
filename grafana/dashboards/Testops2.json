@@ -1,0 +1,120 @@
+{
+  "uid": "Testops",
+  "title": "TestOps Demo",
+  "timezone": "browser",
+  "schemaVersion": 38,
+  "version": 1,
+  "refresh": "5s",
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "panels": [
+    {
+      "id": 1,
+      "title": "Casos por segundo",
+      "type": "timeseries",
+      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 8 },
+      "targets": [
+        {
+          "expr": "sum(rate(k6_http_reqs_total{expected_response=\"true\"}[1m]))",
+          "legendFormat": "OK (2xx)",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(rate(k6_http_reqs_total{expected_response=\"false\"}[1m]))",
+          "legendFormat": "FAIL (4xx / 5xx)",
+          "refId": "B"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqps",
+          "custom": {
+            "drawStyle": "line",
+            "lineWidth": 2,
+            "fillOpacity": 15
+          }
+        },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "OK (2xx)" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "green" } }
+            ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "FAIL (4xx / 5xx)" },
+            "properties": [
+              { "id": "color", "value": { "mode": "fixed", "fixedColor": "red" } }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "title": "Total Casos",
+      "type": "stat",
+      "gridPos": { "x": 0, "y": 8, "w": 8, "h": 6 },
+      "targets": [
+        {
+          "expr": "sum(k6_http_reqs_total)",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "id": 3,
+      "title": "✅ Casos OK",
+      "type": "stat",
+      "gridPos": { "x": 8, "y": 8, "w": 8, "h": 6 },
+      "targets": [
+        {
+          "expr": "sum(k6_http_reqs_total{expected_response=\"true\"})",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "colorMode": "background",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "green"
+          }
+        }
+      }
+    },
+    {
+      "id": 4,
+      "title": "❌ Casos Failed",
+      "type": "stat",
+      "gridPos": { "x": 16, "y": 8, "w": 8, "h": 6 },
+      "targets": [
+        {
+          "expr": "sum(k6_http_reqs_total{expected_response=\"false\"})",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "colorMode": "background",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "red"
+          }
+        }
+      }
+    }
+  ]
+}
